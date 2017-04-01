@@ -10,7 +10,7 @@ var roleHarvester = {
                 var count = 0;
                 // loop through all creeps to find out if someone is assigned to this source
                 for(var tcreep in Game.creeps){
-                    if(tcreep.memory.mySource === source) {
+                    if(tcreep.memory.mySource == source) {
                         count = count + 1;
                         // if count is 2 or more, we can stop this
                         if(count > 1) {
