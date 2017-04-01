@@ -3,33 +3,40 @@ var roleHarvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         if(creep.carry.energy < creep.carryCapacity) {
-            var sources = creep.room.find(FIND_SOURCES);
-            // filter to available sources
-            availSources = []
-            for(var source in sources){
-                var count = 0;
-                // loop through all creeps to find out if someone is assigned to this source
-                for(var tcreep in Game.creeps){
-                    if(tcreep.memory.mySource == source) {
-                        count = count + 1;
-                        // if count is 2 or more, we can stop this
-                        if(count > 1) {
-                            break;
+            // choosing a source at random
+            if(!creep.memory.mySource || creep.memory.mySource == null) {
+                var sources = creep.room.find(FIND_SOURCES);
+                var availSources = [];
+                var maxAssign = 3;
+                console.log(creep.name);
+                console.log(sources);
+                for(var sname in sources){
+                    var source = sources[sname];
+                    console.log(source.id);
+                    var count = 0;
+                    // loop through all creeps to find out if someone is assigned to this source
+                    for(var name in Game.creeps){
+                        var tcreep = Game.creeps[name];
+                        if(tcreep.memory.mySource == source.id) {
+                            count = count + 1;
+                            // if count is 2 or more, we can stop this
+                            if(count > (maxAssign - 1)) {
+                                break;
+                            }
                         }
                     }
+                    // if there are less than 2 creeps assigned to source keep it
+                    if(count < maxAssign) {
+                        availSources.push(source)
+                    }
                 }
-                // if there are less than 2 creeps assigned to source keep it
-                if(count < 2) {
-                    availSources.push(source)
+                console.log(availSources);
+                if(availSources.length > 0) {
+                    creep.memory.mySource = availSources[Math.round(Math.random()*(availSources.length-1))].id;
                 }
             }
-
-            // choosing a source at random
-            if(!creep.memory.mySource) {
-                creep.memory.mySource = availSources[Math.round(Math.random()*(availSources.length-1))];
-            }
-            if(creep.harvest(creep.memory.mySource) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.memory.mySource, {visualizePathStyle: {stroke: '#ffaa00'}});
+            if(creep.harvest(Game.getObjectById(creep.memory.mySource)) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.getObjectById(creep.memory.mySource), {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
         else {
