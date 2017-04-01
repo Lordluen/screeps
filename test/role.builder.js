@@ -19,6 +19,10 @@ var roleBuilder = {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
+            else {
+                var spawn = Game.spawns['Spawn1'];
+                creep.moveTo(spawn, {visualizePathStyle: {stroke: '#ff0000'}});
+            }
         }
         else {
             var sources = creep.room.find(FIND_SOURCES);
