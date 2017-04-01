@@ -12,6 +12,7 @@ module.exports.loop = function () {
     }
 
     // tower direction
+    /**
     var tower = Game.getObjectById('fff6eae37a3ff2ebdceecc84');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -26,19 +27,20 @@ module.exports.loop = function () {
             tower.attack(closestHostile);
         }
     }
+    **/
 
     // prints number of harvester creeps
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    //console.log('Harvesters: ' + harvesters.length);
+    console.log('Harvesters: ' + harvesters.length);
     // if less than 2 harvesters, then spawn a new one (default name)
-    if(harvesters.length < 2) {
+    if(harvesters.length < 4) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
         console.log('Spawning new harvester: ' + newName);
     }
 
     // prints number of builder creeps
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-    //console.log('Builders: ' + builders.length);
+    console.log('Builders: ' + builders.length);
     // if less than 2 harvesters, then spawn a new one (default name)
     if(builders.length < 1) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'builder'});
@@ -47,9 +49,9 @@ module.exports.loop = function () {
 
     // prints number of upgrader creeps
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    //console.log('Upgraders: ' + builders.length);
+    console.log('Upgraders: ' + builders.length);
     // if less than 2 harvesters, then spawn a new one (default name)
-    if(upgraders.length < 1) {
+    if(upgraders.length < 2) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
         console.log('Spawning new upgrader: ' + newName);
     }
