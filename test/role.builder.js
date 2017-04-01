@@ -29,7 +29,7 @@ var roleBuilder = {
             var sources = creep.room.find(FIND_SOURCES);
             // choosing a source at random
             if(!creep.memory.mySource || creep.memory.mySource == -1) {
-                creep.memory.mySource = Math.round(Math.random()*sources.length);
+                creep.memory.mySource = Math.round(Math.random()*(sources.length-1));
             }
             if(creep.harvest(sources[creep.memory.mySource]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[creep.memory.mySource], {visualizePathStyle: {stroke: '#ffaa00'}});
