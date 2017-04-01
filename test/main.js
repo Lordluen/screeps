@@ -51,16 +51,16 @@ module.exports.loop = function () {
     }
     **/
 
-    if((harvesters.length + builders.length) < 6) {
+    if((harvesters.length + builders.length) < 10) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
         console.log('Spawning new harvester: ' + newName);
     }
 
     // prints number of upgrader creeps
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    console.log('Upgraders: ' + builders.length);
+    console.log('Upgraders: ' + upgraders.length);
     // if less than 2 harvesters, then spawn a new one (default name)
-    if(upgraders.length < 2) {
+    if(upgraders.length < 4) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
         console.log('Spawning new upgrader: ' + newName);
     }
@@ -69,7 +69,7 @@ module.exports.loop = function () {
     if(Game.spawns['Spawn1'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
         Game.spawns['Spawn1'].room.visual.text(
-            'ð ï¸' + spawningCreep.memory.role,
+            spawningCreep.memory.role,
             Game.spawns['Spawn1'].pos.x + 1,
             Game.spawns['Spawn1'].pos.y,
             {align: 'left', opacity: 0.8});
