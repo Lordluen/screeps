@@ -4,16 +4,36 @@ var roleHarvester = {
     run: function(creep) {
         if(creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
-            // choosing a source at random
-            if(!creep.memory.mySource || creep.memory.mySource == -1) {
-                creep.memory.mySource = Math.round(Math.random()*(sources.length-1));
+            // filter to available sources
+            availSources = []
+            for(var source in sources){
+                var count = 0;
+                // loop through all creeps to find out if someone is assigned to this source
+                for(var tcreep in Game.creeps){
+                    if(tcreep.memory.mySource === source) {
+                        count = count + 1;
+                        // if count is 2 or more, we can stop this
+                        if(count > 1) {
+                            break;
+                        }
+                    }
+                }
+                // if there are less than 2 creeps assigned to source keep it
+                if(count < 2) {
+                    availSources.push(source)
+                }
             }
-            if(creep.harvest(sources[creep.memory.mySource]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[creep.memory.mySource], {visualizePathStyle: {stroke: '#ffaa00'}});
+
+            // choosing a source at random
+            if(!creep.memory.mySource) {
+                creep.memory.mySource = availSources[Math.round(Math.random()*(availSources.length-1))];
+            }
+            if(creep.harvest(creep.memory.mySource) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.memory.mySource, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
         else {
-            creep.memory.mySource = -1;
+            creep.memory.mySource = null;
             var targets = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
