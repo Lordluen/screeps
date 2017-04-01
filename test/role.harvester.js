@@ -7,7 +7,7 @@ var roleHarvester = {
             if(!creep.memory.mySource || creep.memory.mySource == null) {
                 var sources = creep.room.find(FIND_SOURCES);
                 var availSources = [];
-                var maxAssign = 3;
+                var maxAssign = 4;
                 console.log(creep.name);
                 console.log(sources);
                 for(var sname in sources){
@@ -47,6 +47,7 @@ var roleHarvester = {
                             structure.energy < structure.energyCapacity;
                     }
             });
+            console.log(targets);
             if(targets.length > 0) {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
@@ -56,6 +57,13 @@ var roleHarvester = {
                 creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ff0000'}});
             }
         }
+
+        // switch to builder if construction is needed
+        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+        if(targets.length) {
+            creep.memory.role = 'builder';
+        }
+
     }
 };
 

@@ -6,11 +6,11 @@ var roleUpgrader = {
         if(creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
             creep.memory.mySource = null;
-            creep.say('ð harvest');
+            creep.say('Ã°ÂÂÂ harvest');
         }
         if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
             creep.memory.upgrading = true;
-            creep.say('ð§ upgrade');
+            creep.say('Ã°ÂÂÂ§ upgrade');
         }
 
         if(creep.memory.upgrading) {
@@ -24,7 +24,7 @@ var roleUpgrader = {
             if(!creep.memory.mySource || creep.memory.mySource == null) {
                 var sources = creep.room.find(FIND_SOURCES);
                 var availSources = [];
-                var maxAssign = 3;
+                var maxAssign = 4;
                 console.log(creep.name);
                 console.log(sources);
                 for(var sname in sources){

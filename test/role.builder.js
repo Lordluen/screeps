@@ -6,11 +6,11 @@ var roleBuilder = {
         if(creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
             creep.memory.mySource = null;
-            creep.say('ð harvest');
+            creep.say('Ã°ÂÂÂ harvest');
         }
         if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
             creep.memory.building = true;
-            creep.say('ð§ build');
+            creep.say('Ã°ÂÂÂ§ build');
         }
 
         if(creep.memory.building) {
@@ -21,8 +21,8 @@ var roleBuilder = {
                 }
             }
             else {
-                var spawn = Game.spawns['Spawn1'];
-                creep.moveTo(spawn, {visualizePathStyle: {stroke: '#ff0000'}});
+                // switch to harvester if there is nothing to build
+                creep.memory.role = 'harvester';
             }
         }
         else {
@@ -30,7 +30,7 @@ var roleBuilder = {
             if(!creep.memory.mySource || creep.memory.mySource == null) {
                 var sources = creep.room.find(FIND_SOURCES);
                 var availSources = [];
-                var maxAssign = 3;
+                var maxAssign = 4;
                 console.log(creep.name);
                 console.log(sources);
                 for(var sname in sources){
